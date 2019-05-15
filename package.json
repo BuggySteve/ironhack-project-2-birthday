@@ -1,0 +1,33 @@
+{
+  "name": "my-code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js -e \"js hbs \"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BuggySteve/ironhack-project-2-birthday.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BuggySteve/ironhack-project-2-birthday/issues"
+  },
+  "homepage": "https://github.com/BuggySteve/ironhack-project-2-birthday#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^2.0.3",
+    "express": "^4.16.4",
+    "express-session": "^1.16.1",
+    "hbs": "^4.0.4",
+    "mongoose": "^5.5.8",
+    "node": "^12.2.0",
+    "nodemon": "^1.19.0",
+    "path": "^0.12.7"
+  }
+}

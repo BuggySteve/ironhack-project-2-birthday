@@ -1,0 +1,31 @@
+<h1>My created events</h1>
+<div class="display-parties">
+
+  {{#each user.created_parties}}
+
+  <div class="card party-card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{ this.title }}</h5>
+      <p class="card-text">{{ this.description }}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Start: {{ this.start_date }}, {{ this.start_time }}</li>
+      <li class="list-group-item">End: {{ this.end_date }}, {{ this.end_time }}</li>
+      <li class="list-group-item">Location: {{ this.location }}</li>
+      <li class="list-group-item">
+        Guests:
+        <ul>
+          {{#each }}
+          <li> {{ this.guests }}</li>
+        </ul>
+      </li>
+    </ul>
+    <div class="card-body">
+      <a href="/parties/edit?id={{this._id}}" class="card-link">Edit</a>
+    </div>
+  </div>
+
+
+  {{/each}}
+
+</div>

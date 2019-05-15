@@ -1,0 +1,65 @@
+<div class="pos-f-t">
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="btn-group">
+
+      {{#if currentUser}}
+
+      <button type="button" class="btn btn-danger" onclick="location.href='/user/sign-out'">Sign out</button>
+
+      {{else}}
+
+      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        Login
+      </button>
+      <div class="dropdown-menu">
+        <form class="px-4 py-3" action="/user/log-in" method="POST">
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-control" name="username" placeholder="Username">
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" name="password" placeholder="Password">
+          </div>
+          <div class="form-group">
+            <div class="form-check">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/user/sign-up">New around here? Sign up</a>
+      </div>
+
+      {{/if}}
+
+    </div>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+      aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+  <div class="collapse" id="navbarToggleExternalContent">
+    <div class="bg-dark p-4 nav-custom">
+
+      {{#if currentUser}}
+
+      <a href="/">HOME</a>
+      <a href="/user/dashboard">Dashboard</a>
+      <a href="/user/profile">Profile</a>
+      <a href="/user/sign-up">Sign up</a>
+      <a href="/parties/created">Created parties</a>
+      <a href="/parties/planned">Planned parties</a>
+      <a href="/parties/create-one">Throw a party!</a>
+
+      {{else}}
+
+      <a href="/user/sign-up">Sign up</a>
+
+      {{/if}}
+
+    </div>
+  </div>
+</div>

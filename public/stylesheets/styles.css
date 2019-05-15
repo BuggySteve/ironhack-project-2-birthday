@@ -1,0 +1,43 @@
+.nav-custom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgba(175, 173, 173, 0.274);
+  padding: 2.5vh 2.5vw;
+  margin: 5vh;
+  border-radius: 10px;
+}
+
+.sign-up-card {
+  width: 30vw;
+  padding: 0;
+}
+
+.margin {
+  margin: 10vh;
+}
+
+#select-guests {
+  display: flex;
+  flex-direction: column;
+}
+
+.display-parties {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.party-card {
+  margin: 10vh 10vw;
+}
