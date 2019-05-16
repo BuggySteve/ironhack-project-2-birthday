@@ -6,7 +6,7 @@
 
   <div class="card party-card" style="width: 18rem;">
     <div class="card-body">
-      <h5 class="card-title">{{ this.title }}</h5>
+      <h4 class="card-title">{{ this.title }}</h4>
       <p class="card-text">{{ this.description }}</p>
     </div>
     <ul class="list-group list-group-flush">
@@ -30,8 +30,9 @@
 
   <div class="card party-card" style="width: 18rem;">
     <div class="card-body">
-      <h5 class="card-title">{{ this.title }}</h5>
-      <p class="card-text">{{ this.description }}</p>
+      <h4 class="card-title">{{ this.title }}</h5>
+        <h5 class="card-title">Hosted by: {{ this.host.first_name }} {{ this.host.last_name }}</h5>
+        <p class="card-text">{{ this.description }}</p>
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item">Start: {{ this.start_date }}, {{ this.start_time }}</li>

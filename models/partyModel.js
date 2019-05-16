@@ -9,7 +9,8 @@ const partySchema = new Schema({
   end_date: { type: String, required: true },
   end_time: { type: String, required: true },
   description: { type: String, required: true },
-  guests: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }]
+  guests: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
+  host: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }]
 });
 
 let Party = mongoose.model("parties", partySchema);

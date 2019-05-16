@@ -41,6 +41,10 @@ router.get("/parties/planned", (req, res) => {
       path: "invited_parties",
       populate: {
         path: "guests"
+      },
+      path: "invited_parties",
+      populate: {
+        path: "host"
       }
     })
     .then(result => {
@@ -62,6 +66,7 @@ router.get("/parties/create-one", (req, res) => {
 
 //Create new party in database with form data
 router.post("/parties/create-one", (req, res) => {
+  debugger
   //User can select one or multiple guests
   if (Array.isArray(req.body.guests)) {
     var guestObjectIds = req.body.guests.map(id => {
@@ -71,6 +76,7 @@ router.post("/parties/create-one", (req, res) => {
     var guestObjectIds = [mongoose.Types.ObjectId(req.body.guests)];
   }
 
+  let hostId = [mongoose.Types.ObjectId(req.session.currentUser._id)]
   let newParty = {
     title: req.body.title,
     location: req.body.location,
@@ -79,7 +85,8 @@ router.post("/parties/create-one", (req, res) => {
     end_date: req.body.end_date,
     end_time: req.body.end_time,
     description: req.body.description,
-    guests: guestObjectIds
+    guests: guestObjectIds,
+    host: hostId
   };
 
   Party.create(newParty)
@@ -96,7 +103,6 @@ router.post("/parties/create-one", (req, res) => {
         }
       );
       //Add party to hosting user
-      let hostId = [mongoose.Types.ObjectId(req.session.currentUser._id)];
       User.updateOne(
         { _id: hostId },
         { $push: { created_parties: result._id } },
