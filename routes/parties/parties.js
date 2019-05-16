@@ -64,11 +64,11 @@ router.get("/parties/create-one", (req, res) => {
 router.post("/parties/create-one", (req, res) => {
   //User can select one or multiple guests
   if (Array.isArray(req.body.guests)) {
-    var guestIds = req.body.guests.map(id => {
+    var guestObjectIds = req.body.guests.map(id => {
       return mongoose.Types.ObjectId(id);
     });
   } else {
-    var guestIds = [mongoose.Types.ObjectId(req.body.guests)];
+    var guestObjectIds = [mongoose.Types.ObjectId(req.body.guests)];
   }
 
   let newParty = {
@@ -79,7 +79,7 @@ router.post("/parties/create-one", (req, res) => {
     end_date: req.body.end_date,
     end_time: req.body.end_time,
     description: req.body.description,
-    guests: guestIds
+    guests: guestObjectIds
   };
 
   Party.create(newParty, (err, result) => {
@@ -88,7 +88,7 @@ router.post("/parties/create-one", (req, res) => {
 
     //Add party to invited users
     User.update(
-      { _id: { $in: guestIds } },
+      { _id: { $in: guestObjectIds } },
       { $push: { invited_parties: result._id } },
       (err, result) => {
         if (err) {
@@ -114,7 +114,6 @@ router.post("/parties/create-one", (req, res) => {
 
 //Render form where user can edit party
 router.get("/parties/edit", (req, res) => {
-  debugger
   let partyObjectId = mongoose.Types.ObjectId(req.query.id);
   Party
     .findOne({ _id: partyObjectId })
@@ -154,8 +153,17 @@ router.get("/parties/edit", (req, res) => {
 
 router.post("/parties/edit", (req, res) => {
   let partyObjectId = mongoose.Types.ObjectId(req.body.id);
-  let { title, location, start_date, start_time, end_date, end_time, description, guests } = req.body;
-  Party.updateOne({ _id: partyObjectId }, { $set: { title, location, start_date, start_time, end_date, end_time, description, guests } })
+  debugger
+  if (Array.isArray(req.body.guests)) {
+    var guestObjectIds = req.body.guests.map(id => {
+      return mongoose.Types.ObjectId(id);
+    });
+  } else {
+    var guestObjectIds = [mongoose.Types.ObjectId(req.body.guests)];
+  };
+  debugger
+  let { title, location, start_date, start_time, end_date, end_time, description } = req.body;
+  Party.updateOne({ _id: partyObjectId }, { $set: { title, location, start_date, start_time, end_date, end_time, description, guests: guestObjectIds } })
     .then((party) => {
       res.redirect("/parties/created");
     })
