@@ -42,7 +42,8 @@ mongoose
 
 app.use("/", identifyUser, require("./routes/index"));
 app.use("/", identifyUser, require("./routes/user/user"));
-app.use("/", identifyUser, require("./routes/parties/parties"));
+app.use("/", identifyUser, authenticateUser, require("./routes/user/user-protected"));
+app.use("/", identifyUser, authenticateUser, require("./routes/parties/parties"));
 
 function identifyUser(req, res, next) {
   res.locals.currentUser = req.session.currentUser;

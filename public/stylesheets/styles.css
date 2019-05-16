@@ -39,5 +39,6 @@
 }
 
 .party-card {
-  margin: 10vh 10vw;
+  margin-top: 10vh;
+  margin-left: 10vw;
 }

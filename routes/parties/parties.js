@@ -82,34 +82,35 @@ router.post("/parties/create-one", (req, res) => {
     guests: guestObjectIds
   };
 
-  Party.create(newParty, (err, result) => {
-    if (err) res.send("ERROR creating party");
-    console.log(err);
-
-    //Add party to invited users
-    User.update(
-      { _id: { $in: guestObjectIds } },
-      { $push: { invited_parties: result._id } },
-      (err, result) => {
-        if (err) {
-          res.send("ERROR adding party to user profiles");
-          console.log(err);
+  Party.create(newParty)
+    .then((result) => {
+      //Add party to invited users
+      User.update(
+        { _id: { $in: guestObjectIds } },
+        { $push: { invited_parties: result._id } },
+        (err, result) => {
+          if (err) {
+            res.send("ERROR adding party to user profiles");
+            console.log(err);
+          }
         }
-      }
-    );
-    //Add party to hosting user
-    let hostId = [mongoose.Types.ObjectId(req.session.currentUser._id)];
-    User.updateOne(
-      { _id: hostId },
-      { $push: { created_parties: result._id } },
-      (err, result) => {
-        if (err) {
-          res.send("ERROR adding party to host profile");
-          console.log(err);
-        } else res.redirect("/parties/created");
-      }
-    );
-  });
+      );
+      //Add party to hosting user
+      let hostId = [mongoose.Types.ObjectId(req.session.currentUser._id)];
+      User.updateOne(
+        { _id: hostId },
+        { $push: { created_parties: result._id } },
+        (err, result) => {
+          if (err) {
+            res.send("ERROR adding party to host profile");
+            console.log(err);
+          } else res.redirect("/parties/created");
+        })
+    })
+    .catch((err) => {
+      res.send("ERROR creating party");
+      console.log(err);
+    });
 });
 
 //Render form where user can edit party
@@ -151,9 +152,9 @@ router.get("/parties/edit", (req, res) => {
     });
 });
 
+//Update party in database
 router.post("/parties/edit", (req, res) => {
   let partyObjectId = mongoose.Types.ObjectId(req.body.id);
-  debugger
   if (Array.isArray(req.body.guests)) {
     var guestObjectIds = req.body.guests.map(id => {
       return mongoose.Types.ObjectId(id);
@@ -161,7 +162,6 @@ router.post("/parties/edit", (req, res) => {
   } else {
     var guestObjectIds = [mongoose.Types.ObjectId(req.body.guests)];
   };
-  debugger
   let { title, location, start_date, start_time, end_date, end_time, description } = req.body;
   Party.updateOne({ _id: partyObjectId }, { $set: { title, location, start_date, start_time, end_date, end_time, description, guests: guestObjectIds } })
     .then((party) => {
