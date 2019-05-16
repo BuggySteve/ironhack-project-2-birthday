@@ -1,1 +1,53 @@
 <h1>PLANNED EVENTS</h1>
+
+<div class="display-parties">
+
+  {{#each user.created_parties}}
+
+  <div class="card party-card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{ this.title }}</h5>
+      <p class="card-text">{{ this.description }}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Start: {{ this.start_date }}, {{ this.start_time }}</li>
+      <li class="list-group-item">End: {{ this.end_date }}, {{ this.end_time }}</li>
+      <li class="list-group-item">Location: {{ this.location }}</li>
+      <li class="list-group-item">
+        Guests:
+        <ul>
+          {{#each this.guests}}
+          <li> {{ this.first_name }} {{ this.last_name }}</li>
+          {{/each}}
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  {{/each}}
+
+  {{#each user.invited_parties}}
+
+  <div class="card party-card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{ this.title }}</h5>
+      <p class="card-text">{{ this.description }}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Start: {{ this.start_date }}, {{ this.start_time }}</li>
+      <li class="list-group-item">End: {{ this.end_date }}, {{ this.end_time }}</li>
+      <li class="list-group-item">Location: {{ this.location }}</li>
+      <li class="list-group-item">
+        Guests:
+        <ul>
+          {{#each this.guests}}
+          <li> {{ this.first_name }} {{ this.last_name }}</li>
+          {{/each}}
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  {{/each}}
+
+</div>

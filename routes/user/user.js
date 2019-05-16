@@ -36,7 +36,7 @@ router.post("/user/sign-up", (req, res) => {
         if (user.length > 0) {
           res.send("User already exists"); //add new route here
         } else {
-          bcrypt.hash(req.body.password, 10, function(err, hash) {
+          bcrypt.hash(req.body.password, 10, function (err, hash) {
             if (err) throw new Error("hashing error");
             else {
               newUser.password = hash;
@@ -59,7 +59,7 @@ router.post("/user/log-in", (req, res, next) => {
   User.find({ username: req.body.username })
     .then(user => {
       if (user.length > 0) {
-        bcrypt.compare(req.body.password, user[0].password, function(
+        bcrypt.compare(req.body.password, user[0].password, function (
           err,
           same
         ) {

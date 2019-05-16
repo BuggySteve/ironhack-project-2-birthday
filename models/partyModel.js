@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const partySchema = new Schema({
-  title: { type: String },
-  location: { type: String },
-  start_date: { type: String },
-  start_time: { type: String },
-  end_date: { type: String },
-  end_time: { type: String },
-  description: { type: String },
+  title: { type: String, required: true },
+  location: { type: String, required: true },
+  start_date: { type: String, required: true },
+  start_time: { type: String, required: true },
+  end_date: { type: String, required: true },
+  end_time: { type: String, required: true },
+  description: { type: String, required: true },
   guests: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }]
 });
 

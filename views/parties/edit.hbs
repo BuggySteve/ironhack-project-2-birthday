@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="sign-up-form">
+    <form action="/parties/edit" method="POST">
+      <input type="hidden" name="id" value="{{ party._id }}">
+      <div class="form-group">
+        <label>Party title</label>
+        <input type="text" class="form-control" name="title" value="{{ party.title }}" placeholder="{{ party.title }}"
+          required>
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <input type="text" class="form-control" name="location" value="{{ party.location }}"
+          placeholder="{{ party.location }}" required>
+      </div>
+      <div class="form-group">
+        <label>Start</label>
+        <input type="date" class="form-control" name="start_date" value="{{ party.start_date }}"
+          placeholder="{{ party.start_date }}" required>
+        <input type="time" class="form-control" name="start_time" value="{{ party.start_time }}"
+          placeholder="{{ party.start_time }}" required>
+      </div>
+      <div class="form-group">
+        <label>End</label>
+        <input type="date" class="form-control" name="end_date" value="{{ party.end_date }}"
+          placeholder="{{ party.end_date }}">
+        <input type="time" class="form-control" name="end_time" value="{{ party.end_time }}"
+          placeholder="{{ party.end_time }}">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea class="form-control" name="description" rows="4" placeholder="{{ party.description }}"
+          required>{{ party.description }}</textarea>
+      </div>
+      <div class="form-group" id="select-guests">
+        <label>Invited guests</label>
+        <select name="guests" multiple={{invitedGuests.length}}>
+          {{#each invitedGuests}}
+          <option value="{{_id}}">{{this.first_name}} {{this.last_name}}</option>
+          {{/each}}
+        </select>
+        <label>Uninvited guests</label>
+        <select name="uninvitedGuests" multiple={{uninvitedGuests.length}}>
+          {{#each uninvitedGuests}}
+          <option value="{{_id}}">{{this.first_name}} {{this.last_name}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Save changes</button>
+    </form>
+  </div>
+</div>

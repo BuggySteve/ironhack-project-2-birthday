@@ -49,6 +49,11 @@ function identifyUser(req, res, next) {
   next();
 }
 
+function authenticateUser(req, res, next) {
+  if (req.session.currentUser) next();
+  else res.redirect("/");
+}
+
 app.listen(3000, () => {
   console.log(".get and thou shalt receive");
 });
