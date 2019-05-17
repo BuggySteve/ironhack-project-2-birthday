@@ -10,12 +10,6 @@ router.get("/user/dashboard", (req, res) => {
   res.render("./user/dashboard");
 });
 
-//Show user profile
-router.get("/user/profile", (req, res) => {
-  res.render("./user/profile");
-});
-
-
 //User sign out
 router.get("/user/sign-out", (req, res) => {
   req.session.destroy(err => {

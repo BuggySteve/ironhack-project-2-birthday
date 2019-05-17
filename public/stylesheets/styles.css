@@ -28,6 +28,14 @@
   margin: 10vh;
 }
 
+.flex {
+  display: flex;
+}
+
+.margin-small {
+  margin: 1vh;
+}
+
 #select-guests {
   display: flex;
   flex-direction: column;
@@ -41,4 +49,13 @@
 .party-card {
   margin-top: 10vh;
   margin-left: 10vw;
+}
+
+.modal-custom {
+  display: flex;
+  justify-content: center;
+}
+
+.bg-dark.p-4.nav-custom a {
+  color: green;
 }

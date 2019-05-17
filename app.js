@@ -29,6 +29,7 @@ app.set("views", __dirname + "/views");
 
 hbs.registerPartials(__dirname + "/views/partials");
 
+
 mongoose
   .connect("mongodb://localhost:27017/throw-a-party", { useNewUrlParser: true })
   .then(x => {
