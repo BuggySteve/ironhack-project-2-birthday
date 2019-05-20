@@ -134,3 +134,7 @@ h1, h3, h5, label, li, p {
   color: #fff;
   margin: 1vh;
 }
+
+.error p {
+  margin: 0;
+}

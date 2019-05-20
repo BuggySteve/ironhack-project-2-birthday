@@ -175,15 +175,19 @@ router.post("/parties/edit", (req, res) => {
 
 //Remove party from database
 router.get("/parties/delete", (req, res) => {
-  debugger
   let partyObjectId = mongoose.Types.ObjectId(req.query.id);
   Party.findOne({ _id: partyObjectId })
     .then((party) => {
       let hostObjectId = party.host;
       let guestObjectIds = party.guests;
 
-      User.updateOne({ _id: hostObjectId }, { $pull: { created_parties: partyObjectId } });
-      User.update({ _id: { $in: guestObjectIds } }, { $pull: { invited_parties: partyObjectId } });
+      //Remove partyObjectId from host user account
+      let updateHost = User.updateOne({ _id: hostObjectId }, { $pull: { created_parties: partyObjectId } });
+
+      //Remove partyObjectId from guests user accounts
+      let updateGuests = User.update({ _id: { $in: guestObjectIds } }, { $pull: { invited_parties: partyObjectId } });
+
+      return Promise.all([updateHost, updateGuests])
     })
     .catch((err) => {
       res.send(err);
@@ -193,7 +197,8 @@ router.get("/parties/delete", (req, res) => {
         .then(() => {
           res.redirect("/parties/created")
         })
-        .catch((err) => {
+        .catch
+        ((err) => {
           res.send(err);
         });
     })

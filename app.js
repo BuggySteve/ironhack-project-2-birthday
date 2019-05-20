@@ -6,7 +6,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
-const flash = require("connect-flash");
+// const nodemailer = require("nodemailer");
 
 require("dotenv").config();
 
@@ -24,7 +24,6 @@ app.use(
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(flash());
 
 app.set("view engine", "hbs");
 app.set("views", __dirname + "/views");
