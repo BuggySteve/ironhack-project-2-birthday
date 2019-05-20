@@ -136,7 +136,7 @@ router.get("/parties/edit", (req, res) => {
       } else {
         let invitedGuestIds = party.guests.map((guest) => guest._id)
 
-        //User can add/remove guests
+        //User can add/remove guests (but not its own account)
         User.find({ _id: { $nin: invitedGuestIds } })
           .then((guests) => {
             res.render("./parties/edit", {
@@ -165,7 +165,20 @@ router.post("/parties/edit", (req, res) => {
   };
   let { title, location, start_date, start_time, end_date, end_time, description } = req.body;
   Party.updateOne({ _id: partyObjectId }, { $set: { title, location, start_date, start_time, end_date, end_time, description, guests: guestObjectIds } })
-    .then((party) => {
+    .then(() => {
+
+      //Remove party from all user accounts
+      let removePartyFromGuests = User.update({}, { $pull: { invited_parties: partyObjectId } }, { multi: true });
+
+      //Add partyObjectId to all invited guests user accounts
+      let addPartyToGuests = User.update({ _id: { $in: guestObjectIds } }, { $push: { invited_parties: partyObjectId } }, { multi: true });
+
+      return Promise.all([removePartyFromGuests, addPartyToGuests]);
+    })
+    .catch((err) => {
+      res.send(err);
+    })
+    .then(() => {
       res.redirect("/parties/created");
     })
     .catch((err) => {
@@ -185,7 +198,7 @@ router.get("/parties/delete", (req, res) => {
       let updateHost = User.updateOne({ _id: hostObjectId }, { $pull: { created_parties: partyObjectId } });
 
       //Remove partyObjectId from guests user accounts
-      let updateGuests = User.update({ _id: { $in: guestObjectIds } }, { $pull: { invited_parties: partyObjectId } });
+      let updateGuests = User.update({ _id: { $in: guestObjectIds } }, { $pull: { invited_parties: partyObjectId } }, { multi: true });
 
       return Promise.all([updateHost, updateGuests])
     })
