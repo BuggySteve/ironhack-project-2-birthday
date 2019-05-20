@@ -40,7 +40,7 @@ router.get("/parties/planned", (req, res) => {
     .populate({
       path: "invited_parties",
       populate: {
-        path: "guests"
+        path: "guests host"
       },
     })
     .then(result => {
@@ -62,7 +62,6 @@ router.get("/parties/create-one", (req, res) => {
 
 //Create new party in database with form data
 router.post("/parties/create-one", (req, res) => {
-  debugger
   //User can select one or multiple guests
   if (Array.isArray(req.body.guests)) {
     var guestObjectIds = req.body.guests.map(id => {
@@ -167,7 +166,6 @@ router.post("/parties/edit", (req, res) => {
   let { title, location, start_date, start_time, end_date, end_time, description } = req.body;
   Party.updateOne({ _id: partyObjectId }, { $set: { title, location, start_date, start_time, end_date, end_time, description, guests: guestObjectIds } })
     .then((party) => {
-      //
       res.redirect("/parties/created");
     })
     .catch((err) => {
@@ -177,10 +175,27 @@ router.post("/parties/edit", (req, res) => {
 
 //Remove party from database
 router.get("/parties/delete", (req, res) => {
+  debugger
   let partyObjectId = mongoose.Types.ObjectId(req.query.id);
-  Party.deleteOne({ _id: partyObjectId })
+  Party.findOne({ _id: partyObjectId })
+    .then((party) => {
+      let hostObjectId = party.host;
+      let guestObjectIds = party.guests;
+
+      User.updateOne({ _id: hostObjectId }, { $pull: { created_parties: partyObjectId } });
+      User.update({ _id: { $in: guestObjectIds } }, { $pull: { invited_parties: partyObjectId } });
+    })
+    .catch((err) => {
+      res.send(err);
+    })
     .then(() => {
-      res.redirect("/parties/created")
+      Party.deleteOne({ _id: partyObjectId })
+        .then(() => {
+          res.redirect("/parties/created")
+        })
+        .catch((err) => {
+          res.send(err);
+        });
     })
     .catch((err) => {
       res.send(err);

@@ -8,9 +8,11 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
 
+require("dotenv").config();
+
 app.use(
   session({
-    secret: "jeff9164",
+    secret: process.env.Cookie_Secret,
     cookie: { maxAge: 60000 },
     store: new MongoStore({
       mongooseConnection: mongoose.connection,
@@ -31,7 +33,7 @@ hbs.registerPartials(__dirname + "/views/partials");
 
 
 mongoose
-  .connect("mongodb://localhost:27017/throw-a-party", { useNewUrlParser: true })
+  .connect(process.env.MongoDB_URI, { useNewUrlParser: true })
   .then(x => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
@@ -56,6 +58,6 @@ function authenticateUser(req, res, next) {
   else res.redirect("/");
 }
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log(".get and thou shalt receive");
 });

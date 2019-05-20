@@ -1,3 +1,13 @@
+body {
+  font-family: "Trebuchet MS"
+}
+
+
+
+h1, h3, h5, label, li, p {
+  color: rgb(49, 119, 49);
+}
+
 .nav-custom {
   display: flex;
   flex-direction: column;
@@ -47,7 +57,8 @@
 }
 
 .party-card {
-  margin-top: 10vh;
+  margin-top: 2vh;
+  margin-bottom: 10vh;
   margin-left: 10vw;
 }
 
@@ -57,5 +68,69 @@
 }
 
 .bg-dark.p-4.nav-custom a {
-  color: green;
+  color: #fff;
+}
+
+.navbar.navbar-dark.bg-dark {
+  background: rgb(101, 199, 101)!important;
+}
+
+.bg-dark.p-4.nav-custom  {
+  background: rgb(101, 199, 101)!important;
+}
+
+.btn-success {
+  background: rgb(49, 119, 49)!important;
+}
+
+.btn-primary {
+  background: rgb(49, 119, 49)!important;
+  border-color: rgb(49, 119, 49)!important;
+}
+
+.page-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2vh;
+  margin-left: 10vw;
+  margin-right: 10vw;
+}
+
+.page-title h1 {
+  margin-right: 5vw;
+}
+
+#error-message {
+  color: red;
+  display: none;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  margin-left: 2vw;
+}
+
+.card-title {
+  color: rgb(49, 119, 49);
+}
+
+.card-link {
+  color: rgb(101, 199, 101);
+}
+
+.footer-container {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgb(101, 199, 101);
+  align-items: center;
+}
+
+.footer p {
+  color: #fff;
+  margin: 1vh;
 }

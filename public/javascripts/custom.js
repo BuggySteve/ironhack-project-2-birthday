@@ -4,15 +4,16 @@ $(document).ready(function (e) {
   addEventListenerToSelectGuests();
 
   //Party date default value is today
-  $('#start-date').val(new Date().toDateInputValue());
-  $('#end-date').val(new Date().toDateInputValue());
-  $('#start-time').val("00:00");
+  $("#start-date").val(new Date().toDateInputValue());
+  $("#end-date").val(new Date().toDateInputValue());
+  $("#start-time").val("00:00");
 
   //Party cannot be created before today
-  $('#start-date').attr("min", new Date().toDateInputValue());
-
+  $("#start-date").attr("min", new Date().toDateInputValue());
   setEndDateDefault();
-  setEndTimeDefault();
+
+  //Show actual date on user dashboard
+  $("#actual-date").html(new Date().toDateInputValue());
 
 })
 
@@ -47,3 +48,41 @@ function setEndDateDefault() {
     $('#end-date').attr("min", startDateVal);
   });
 };
+
+
+// $("form").submit(function (e) {
+//   e.preventDefault();
+
+//   $.ajax({
+//     method: "post",
+//     url: "/login",
+//     data: { username: $(this).find("input").value() }
+//   }).done(function (successResult) {
+//     console.log(successResult);
+//     // window.location.href = "/profile"
+//   }).fail(function (err) {
+//     console.log(err);
+//     $(".error").html(err.responseText).show()
+//   })
+
+// })
+
+$("#sign-in-form").submit((e) => {
+
+
+  e.preventDefault();
+  var formData = {
+    username: $("input[name='username']").val(),
+    password: $("input[name='password']").val()
+  }
+  $.ajax({
+    type: "POST",
+    url: "/user/sign-in",
+    data: formData,
+  })
+    .done((succes) => {
+      window.location = "/user/dashboard"
+    }).fail((err) => {
+      $("#error-message").show().delay(3000).fadeOut();
+    })
+})

@@ -1,4 +1,4 @@
-<h1>PLANNED EVENTS</h1>
+<h1 class="page-title">Planned parties</h1>
 
 <div class="display-parties">
 
@@ -7,6 +7,7 @@
   <div class="card party-card" style="width: 18rem;">
     <div class="card-body">
       <h4 class="card-title">{{ this.title }}</h4>
+      <h5 class="card-title">Hosted by me </h5>
       <p class="card-text">{{ this.description }}</p>
     </div>
     <ul class="list-group list-group-flush">
@@ -31,7 +32,7 @@
   <div class="card party-card" style="width: 18rem;">
     <div class="card-body">
       <h4 class="card-title">{{ this.title }}</h4>
-      <h5 class="card-title">Hosted by: {{ this.host }} </h5>
+      <h5 class="card-title">Hosted by: {{ this.host.username }} </h5>
       <p class="card-text">{{ this.description }}</p>
     </div>
     <ul class="list-group list-group-flush">

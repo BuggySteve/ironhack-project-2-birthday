@@ -45,7 +45,7 @@ router.post("/user/sign-up", (req, res) => {
 });
 
 //User sign in
-router.post("/user/log-in", (req, res, next) => {
+router.post("/user/sign-in", (req, res, next) => {
   User.find({ username: req.body.username })
     .then(user => {
       if (user.length > 0) {
@@ -57,17 +57,17 @@ router.post("/user/log-in", (req, res, next) => {
           if (same) {
             delete user[0].password;
             req.session.currentUser = user[0];
-            res.redirect("/user/dashboard");
+            res.status(200).json({ message: "Logged in" })
           } else {
-            res.redirect("/");
+            res.status(401).json({ mesage: "Wrong credentials" })
           }
         });
       } else {
-        res.redirect("/");
+        res.status(401).json({ mesage: "Wrong credentials" })
       }
     })
     .catch(err => {
-      res.status(500).send("An error Occured");
+      res.status(500).json({ message: "An error Occured" });
       console.log(err);
     });
 });
